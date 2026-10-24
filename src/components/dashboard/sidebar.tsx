@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -7,6 +8,8 @@ import {
   Table,
   PieChart,
   Settings,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { useTableStore } from '@/store/table-store';
 import { Logo } from '@/components/landing/logo';
@@ -18,6 +21,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
+  const [collapsed, setCollapsed] = useState(false);
   const { data, getProcessedData } = useTableStore();
 
   const processedData = getProcessedData();
@@ -54,11 +58,30 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
   ];
 
   return (
-    <div className="bg-sidebar border-r border-sidebar-border flex flex-col w-64">
+    <div
+      className={cn(
+        'bg-sidebar border-r border-sidebar-border flex flex-col transition-all duration-300',
+        collapsed ? 'w-16' : 'w-64'
+      )}
+    >
       <div className="p-4 flex-1 flex flex-col">
         {/* Header */}
-        <div className="mb-6">
-          <Logo />
+        <div
+          className={cn(
+            'mb-6',
+            collapsed ? 'flex justify-center' : 'flex items-center justify-between'
+          )}
+        >
+          {!collapsed && <Logo linkToHome={false} />}
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => setCollapsed(!collapsed)}
+            className="shrink-0"
+            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+          </Button>
         </div>
 
         {/* Navigation */}
@@ -80,22 +103,25 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
                   )}
                   onClick={() => !item.disabled && onTabChange(item.id)}
                   disabled={item.disabled}
+                  title={collapsed ? item.label : undefined}
                 >
                   <div className="flex items-center gap-3 w-full">
                     <Icon className="h-4 w-4 shrink-0" />
-                    <div className="flex-1 text-left">
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium">{item.label}</span>
-                        {item.badge && (
-                          <Badge variant="secondary" className="text-xs">
-                            {item.badge}
-                          </Badge>
-                        )}
+                    {!collapsed && (
+                      <div className="flex-1 text-left">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">{item.label}</span>
+                          {item.badge && (
+                            <Badge variant="secondary" className="text-xs">
+                              {item.badge}
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {item.description}
+                        </p>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {item.description}
-                      </p>
-                    </div>
+                    )}
                   </div>
                 </Button>
               </div>
@@ -106,12 +132,12 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
         <div className="flex-1" />
 
         {/* Footer signature */}
-        <div className="mt-6 pt-4 border-t border-sidebar-border text-xs text-muted-foreground font-mono space-y-0.5">
-          <div className="font-semibold text-foreground mb-1">JSON DASH</div>
-          <div>Open source</div>
-          <div>Client side</div>
-          <div>No database</div>
-        </div>
+        {!collapsed && (
+          <div className="mt-6 pt-4 border-t border-sidebar-border text-xs text-muted-foreground font-mono">
+            <div className="font-semibold text-foreground mb-1.5">JSON DASH</div>
+            <div className="leading-relaxed">Open source · Client side · No database</div>
+          </div>
+        )}
       </div>
     </div>
   );
