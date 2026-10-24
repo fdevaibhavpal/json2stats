@@ -55,12 +55,24 @@ export function CTASection({ onGetStarted, onViewExamples }: CTASectionProps) {
           {benefits.map((benefit) => {
             const Icon = benefit.icon;
             return (
-              <div key={benefit.title} className="border border-border rounded-md p-6">
-                <div className="w-10 h-10 rounded-md border border-border bg-muted flex items-center justify-center mx-auto mb-4">
-                  <Icon className="h-5 w-5 text-foreground" />
+              <div
+                key={benefit.title}
+                className="group relative border border-border rounded-md p-6 overflow-hidden transition-colors hover:bg-muted/40"
+              >
+                {/* Abstract light background, revealed on hover */}
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 85% 15%, color-mix(in oklch, var(--primary) 18%, transparent) 0%, transparent 55%), radial-gradient(circle at 10% 90%, color-mix(in oklch, var(--primary) 10%, transparent) 0%, transparent 50%)',
+                  }}
+                />
+
+                <div className="relative w-10 h-10 rounded-md border border-border bg-muted flex items-center justify-center mx-auto mb-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110">
+                  <Icon className="h-5 w-5 text-foreground transition-colors group-hover:text-primary" />
                 </div>
-                <h3 className="font-semibold mb-1">{benefit.title}</h3>
-                <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                <h3 className="relative font-semibold mb-1">{benefit.title}</h3>
+                <p className="relative text-sm text-muted-foreground">{benefit.description}</p>
               </div>
             );
           })}
