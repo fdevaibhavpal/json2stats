@@ -14,8 +14,8 @@ interface JsonInputProps {
   onClear?: () => void;
 }
 
-function defineJsonDashThemes(monaco: Monaco) {
-  monaco.editor.defineTheme('jsondash-light', {
+function defineJson2StatsThemes(monaco: Monaco) {
+  monaco.editor.defineTheme('json2stats-light', {
     base: 'vs',
     inherit: true,
     rules: [
@@ -34,7 +34,7 @@ function defineJsonDashThemes(monaco: Monaco) {
       'editorIndentGuide.background': '#e0e0dc',
     },
   });
-  monaco.editor.defineTheme('jsondash-dark', {
+  monaco.editor.defineTheme('json2stats-dark', {
     base: 'vs-dark',
     inherit: true,
     rules: [
@@ -59,7 +59,7 @@ export function JsonInput({ value, onChange, onValidate, onCopy, onClear }: Json
   const { resolvedTheme } = useTheme();
 
   const handleBeforeMount = useCallback((monaco: Monaco) => {
-    defineJsonDashThemes(monaco);
+    defineJson2StatsThemes(monaco);
   }, []);
 
   return (
@@ -102,7 +102,7 @@ export function JsonInput({ value, onChange, onValidate, onCopy, onClear }: Json
             onChange(newValue || '');
             onValidate(newValue || '');
           }}
-          theme={resolvedTheme === 'dark' ? 'jsondash-dark' : 'jsondash-light'}
+          theme={resolvedTheme === 'dark' ? 'json2stats-dark' : 'json2stats-light'}
           options={{
             minimap: { enabled: false },
             fontSize: 14,

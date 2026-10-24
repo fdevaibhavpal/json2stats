@@ -134,7 +134,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
         {/* Footer signature */}
         {!collapsed && (
           <div className="mt-6 pt-4 border-t border-sidebar-border text-xs text-muted-foreground font-mono">
-            <div className="font-semibold text-foreground mb-1.5">JSON DASH</div>
+            <div className="font-semibold text-foreground mb-1.5">JSON2STATS</div>
             <div className="leading-relaxed">Open source · Client side · No database</div>
           </div>
         )}

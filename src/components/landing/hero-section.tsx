@@ -25,13 +25,13 @@ export function HeroSection({ onGetStarted, onViewDemo }: HeroSectionProps) {
           </h1>
 
           <p className="text-lg text-muted-foreground mb-8 max-w-xl leading-relaxed">
-            Paste your JSON, explore it as a table, create charts, apply filters,
-            and export — all in your browser. No setup. No database. No hassle.
+            Paste your JSON, explore it as a table, create charts, and export
+            — all in your browser. No setup. No database. No hassle.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3">
             <Button size="lg" onClick={onGetStarted}>
-              Open JsonDash
+              Open Json2Stats
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
             <Button size="lg" variant="outline" onClick={onViewDemo}>

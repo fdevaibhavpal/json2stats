@@ -13,7 +13,7 @@ export function Logo({ collapsed = false, className, linkToHome = true }: LogoPr
   const content = (
     <>
       <span className="text-xl text-muted-foreground">{'{ }'}</span>
-      {!collapsed && <span className="text-lg">JsonDash</span>}
+      {!collapsed && <span className="text-lg">Json2Stats</span>}
     </>
   );
 

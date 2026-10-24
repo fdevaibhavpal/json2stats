@@ -98,7 +98,7 @@ export function DashboardLayout() {
             <div className="flex items-center gap-3">
               <ThemeToggle />
               <a
-                href="https://github.com/fdevaibhavpal/jsondash"
+                href="https://github.com/fdevaibhavpal/json2stats"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground hover:text-foreground hidden sm:inline"

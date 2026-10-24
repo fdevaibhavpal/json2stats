@@ -56,7 +56,7 @@ export function Welcome({ onGetStarted }: WelcomeProps) {
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-2 mb-4">
           <span className="text-3xl font-mono font-bold text-muted-foreground">{'{ }'}</span>
-          <h1 className="text-4xl font-bold">JsonDash</h1>
+          <h1 className="text-4xl font-bold">Json2Stats</h1>
         </div>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           Transform your JSON data into beautiful, interactive dashboards in seconds.
@@ -109,7 +109,7 @@ export function Welcome({ onGetStarted }: WelcomeProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <CheckCircle className="h-5 w-5 text-primary" />
-              Why Choose JsonDash?
+              Why Choose Json2Stats?
             </CardTitle>
           </CardHeader>
           <CardContent>

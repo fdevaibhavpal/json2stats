@@ -12,7 +12,7 @@ export function SettingsView() {
     <div className="max-w-xl space-y-4">
       <div>
         <h2 className="text-xl font-bold">Settings</h2>
-        <p className="text-sm text-muted-foreground">Preferences for JsonDash.</p>
+        <p className="text-sm text-muted-foreground">Preferences for Json2Stats.</p>
       </div>
 
       <Card>

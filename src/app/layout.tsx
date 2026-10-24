@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "JsonDash",
-  description: "Explore JSON data visually — tables, charts, filters, and exports, all in your browser.",
+  title: "Json2Stats",
+  description: "Explore JSON data visually — tables, charts, templates, and exports, all in your browser.",
 };
 
 export default function RootLayout({

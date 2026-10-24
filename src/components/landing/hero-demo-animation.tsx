@@ -55,7 +55,7 @@ export function HeroDemoAnimation() {
       onMouseLeave={() => setPaused(false)}
     >
       <div className="flex items-center justify-between px-6 py-4 border-b border-border">
-        <span className="font-mono font-bold text-base">{'{ }'} JsonDash</span>
+        <span className="font-mono font-bold text-base">{'{ }'} Json2Stats</span>
         <span className="text-sm text-muted-foreground font-mono transition-all duration-500">
           {BREADCRUMB[step]}
         </span>

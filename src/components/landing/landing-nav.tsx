@@ -33,7 +33,7 @@ export function LandingNav() {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <Button variant="default" size="sm" asChild>
-            <a href="https://github.com/fdevaibhavpal/jsondash" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/fdevaibhavpal/json2stats" target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4 mr-2" />
               View on GitHub
             </a>

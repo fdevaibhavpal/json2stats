@@ -55,7 +55,7 @@ export function LandingPage() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <Logo />
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-sm text-muted-foreground font-mono text-center">
-            <span>© 2026 JsonDash</span>
+            <span>© 2026 Json2Stats</span>
             <span className="hidden sm:inline">·</span>
             <span>Paste JSON. Get a table, charts, filters, and exports. Nothing leaves your browser.</span>
           </div>
