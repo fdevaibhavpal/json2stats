@@ -1,6 +1,6 @@
 'use client';
 
-import { Table, BarChart3, Filter, Download } from 'lucide-react';
+import { Table, BarChart3, LayoutGrid, Download } from 'lucide-react';
 
 const FEATURES = [
   {
@@ -17,14 +17,14 @@ const FEATURES = [
   },
   {
     number: '03',
-    title: 'Advanced filters',
-    description: 'Filter, group and analyze your data with powerful conditions.',
-    icon: Filter,
+    title: 'Chart templates',
+    description: 'Start fast with ready-made templates for business, analytics, and finance.',
+    icon: LayoutGrid,
   },
   {
     number: '04',
     title: 'Export anywhere',
-    description: 'Export your data and charts as CSV, JSON, PNG or share a link.',
+    description: 'Export your data and charts as CSV, JSON, Excel or copy to clipboard.',
     icon: Download,
   },
 ];
@@ -36,13 +36,25 @@ export function FeaturesSection() {
         {FEATURES.map((feature) => {
           const Icon = feature.icon;
           return (
-            <div key={feature.number} className="px-6 py-10 sm:border-b lg:border-b-0 border-border">
-              <div className="flex items-center justify-between mb-6">
+            <div
+              key={feature.number}
+              className="group relative px-6 py-10 sm:border-b lg:border-b-0 border-border overflow-hidden transition-colors hover:bg-muted/40"
+            >
+              {/* Abstract light background, revealed on hover */}
+              <div
+                className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                  background:
+                    'radial-gradient(circle at 85% 15%, color-mix(in oklch, var(--primary) 18%, transparent) 0%, transparent 55%), radial-gradient(circle at 10% 90%, color-mix(in oklch, var(--primary) 10%, transparent) 0%, transparent 50%)',
+                }}
+              />
+
+              <div className="relative flex items-center justify-between mb-6">
                 <span className="text-2xl font-bold text-muted-foreground font-mono">{feature.number}</span>
-                <Icon className="h-6 w-6 text-foreground" />
+                <Icon className="h-6 w-6 text-foreground transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:text-primary" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+              <h3 className="relative font-semibold text-lg mb-2">{feature.title}</h3>
+              <p className="relative text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
             </div>
           );
         })}

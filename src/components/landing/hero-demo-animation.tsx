@@ -9,8 +9,6 @@ const SIDEBAR_ITEMS: { label: string; step: Step }[] = [
   { label: 'Data', step: 'input' },
   { label: 'Table', step: 'table' },
   { label: 'Charts', step: 'charts' },
-  { label: 'Filters', step: 'input' },
-  { label: 'Templates', step: 'input' },
   { label: 'Settings', step: 'input' },
 ];
 
@@ -56,19 +54,19 @@ export function HeroDemoAnimation() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <span className="font-mono font-bold text-sm">{'{ }'} JsonDash</span>
-        <span className="text-xs text-muted-foreground font-mono transition-all duration-500">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-border">
+        <span className="font-mono font-bold text-base">{'{ }'} JsonDash</span>
+        <span className="text-sm text-muted-foreground font-mono transition-all duration-500">
           {BREADCRUMB[step]}
         </span>
       </div>
       <div className="flex">
-        <div className="w-28 border-r border-border p-2 space-y-1 text-xs font-mono text-muted-foreground hidden sm:block">
+        <div className="w-36 border-r border-border p-3 space-y-1.5 text-sm font-mono text-muted-foreground hidden sm:block">
           {SIDEBAR_ITEMS.map((item) => (
             <div
               key={item.label}
               className={cn(
-                'px-2 py-1.5 rounded-sm transition-colors duration-500',
+                'px-3 py-2 rounded-sm transition-colors duration-500',
                 item.step === step ? 'bg-muted text-foreground' : ''
               )}
             >
@@ -77,7 +75,7 @@ export function HeroDemoAnimation() {
           ))}
         </div>
 
-        <div className="flex-1 p-4 min-h-[220px] relative overflow-hidden">
+        <div className="flex-1 p-6 min-h-[340px] relative overflow-hidden">
           {/* JSON Input step */}
           <div
             className={cn(
