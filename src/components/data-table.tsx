@@ -257,7 +257,7 @@ export function DataTable({ className, onViewCharts }: DataTableProps) {
 
           {/* Table */}
           <div className="rounded-md border border-border overflow-hidden">
-            <div className="bg-muted border-b border-border">
+            <div className="max-h-[60vh] overflow-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -291,11 +291,6 @@ export function DataTable({ className, onViewCharts }: DataTableProps) {
                     <TableHead className="w-12 bg-muted sticky top-0 z-10">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
-              </Table>
-            </div>
-
-            <div className="max-h-[60vh] overflow-y-auto">
-              <Table>
                 <TableBody>
                   {processedData.data.map((row, index) => (
                     <TableRow key={`row-${index}`} className="hover:bg-muted/50">

@@ -103,7 +103,7 @@ export function DemoSection({ onTryDemo }: DemoSectionProps) {
                 </p>
               </CardHeader>
               <CardContent>
-                <div className="bg-muted border border-border rounded-md p-4 overflow-x-auto">
+                <div className="bg-muted border border-border rounded-md p-4 max-h-80 overflow-auto">
                   <pre className="text-sm text-muted-foreground font-mono">
                     <code>{JSON.stringify(sampleData.users, null, 2)}</code>
                   </pre>
@@ -144,7 +144,7 @@ export function DemoSection({ onTryDemo }: DemoSectionProps) {
                 </p>
               </CardHeader>
               <CardContent>
-                <div className="bg-muted border border-border rounded-md p-4 overflow-x-auto">
+                <div className="bg-muted border border-border rounded-md p-4 max-h-80 overflow-auto">
                   <pre className="text-sm text-muted-foreground font-mono">
                     <code>{JSON.stringify(sampleData.sales, null, 2)}</code>
                   </pre>
@@ -185,7 +185,7 @@ export function DemoSection({ onTryDemo }: DemoSectionProps) {
                 </p>
               </CardHeader>
               <CardContent>
-                <div className="bg-muted border border-border rounded-md p-4 overflow-x-auto">
+                <div className="bg-muted border border-border rounded-md p-4 max-h-80 overflow-auto">
                   <pre className="text-sm text-muted-foreground font-mono">
                     <code>{JSON.stringify(sampleData.products, null, 2)}</code>
                   </pre>
