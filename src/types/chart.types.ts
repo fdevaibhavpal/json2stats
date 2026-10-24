@@ -41,6 +41,8 @@ export interface ChartOptions {
   height?: number;
   showLegend?: boolean;
   showTooltip?: boolean;
+  showDataLabels?: boolean;
+  stackedBars?: boolean;
   interactive?: boolean;
   colors?: string[];
   animation?: boolean;

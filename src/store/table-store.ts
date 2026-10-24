@@ -39,7 +39,6 @@ const initialState: TableState = {
   sortDirection: 'asc',
   pageSize: 20,
   currentPage: 1,
-  filters: {},
   filterGroups: [],
   selectedRows: [],
 };
@@ -66,9 +65,9 @@ export const useTableStore = create<TableStore>((set, get) => ({
   
   setCurrentPage: (page) => set({ currentPage: page }),
   
-  setFilterGroups: (filterGroups) => set({ 
-    filters: filterGroups, 
-    currentPage: 1 
+  setFilterGroups: (filterGroups) => set({
+    filterGroups,
+    currentPage: 1
   }),
   
   toggleColumnVisibility: (columnKey) => {
@@ -110,7 +109,7 @@ export const useTableStore = create<TableStore>((set, get) => ({
         sortBy: '',
         sortDirection: 'asc',
         currentPage: 1,
-        filters: [],
+        filterGroups: [],
         selectedRows: [],
       });
     } catch (error) {

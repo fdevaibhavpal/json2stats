@@ -23,7 +23,6 @@ export interface TableState {
   sortDirection: 'asc' | 'desc';
   pageSize: number;
   currentPage: number;
-  filters: Record<string, any>;
   filterGroups: FilterGroup[];
   selectedRows: string[];
 }

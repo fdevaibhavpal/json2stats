@@ -7,7 +7,6 @@ export interface ChartTemplate {
   description: string;
   category: 'business' | 'analytics' | 'marketing' | 'finance' | 'custom';
   icon: string;
-  color: string;
   config: Partial<ChartConfig>;
   requiredColumns: {
     numeric?: number;
@@ -25,7 +24,6 @@ export const DEFAULT_TEMPLATES: ChartTemplate[] = [
     description: 'Analyze revenue by category with trend insights',
     category: 'business',
     icon: '💰',
-    color: 'from-green-500 to-green-600',
     config: {
       type: 'bar',
       title: 'Revenue Analysis',
@@ -39,7 +37,6 @@ export const DEFAULT_TEMPLATES: ChartTemplate[] = [
     description: 'Track sales performance over time',
     category: 'business',
     icon: '📈',
-    color: 'from-blue-500 to-blue-600',
     config: {
       type: 'line',
       title: 'Sales Trend',
@@ -53,7 +50,6 @@ export const DEFAULT_TEMPLATES: ChartTemplate[] = [
     description: 'Visualize customer distribution by segments',
     category: 'business',
     icon: '👥',
-    color: 'from-purple-500 to-purple-600',
     config: {
       type: 'pie',
       title: 'Customer Segments',
@@ -69,7 +65,6 @@ export const DEFAULT_TEMPLATES: ChartTemplate[] = [
     description: 'Compare key performance indicators',
     category: 'analytics',
     icon: '📊',
-    color: 'from-orange-500 to-orange-600',
     config: {
       type: 'bar',
       title: 'Performance Metrics',
@@ -83,7 +78,6 @@ export const DEFAULT_TEMPLATES: ChartTemplate[] = [
     description: 'Track user journey through conversion stages',
     category: 'analytics',
     icon: '🔄',
-    color: 'from-red-500 to-red-600',
     config: {
       type: 'bar',
       title: 'Conversion Funnel',
@@ -97,7 +91,6 @@ export const DEFAULT_TEMPLATES: ChartTemplate[] = [
     description: 'Analyze user engagement patterns over time',
     category: 'analytics',
     icon: '📱',
-    color: 'from-indigo-500 to-indigo-600',
     config: {
       type: 'line',
       title: 'User Engagement',
@@ -113,7 +106,6 @@ export const DEFAULT_TEMPLATES: ChartTemplate[] = [
     description: 'Compare marketing campaign effectiveness',
     category: 'marketing',
     icon: '🎯',
-    color: 'from-pink-500 to-pink-600',
     config: {
       type: 'bar',
       title: 'Campaign Performance',
@@ -127,7 +119,6 @@ export const DEFAULT_TEMPLATES: ChartTemplate[] = [
     description: 'Analyze website traffic by source',
     category: 'marketing',
     icon: '🌐',
-    color: 'from-teal-500 to-teal-600',
     config: {
       type: 'pie',
       title: 'Traffic Sources',
@@ -141,7 +132,6 @@ export const DEFAULT_TEMPLATES: ChartTemplate[] = [
     description: 'Track conversion rates over time',
     category: 'marketing',
     icon: '📈',
-    color: 'from-cyan-500 to-cyan-600',
     config: {
       type: 'line',
       title: 'Conversion Rates',
@@ -157,7 +147,6 @@ export const DEFAULT_TEMPLATES: ChartTemplate[] = [
     description: 'Visualize expenses by category',
     category: 'finance',
     icon: '💸',
-    color: 'from-yellow-500 to-yellow-600',
     config: {
       type: 'pie',
       title: 'Expense Breakdown',
@@ -171,7 +160,6 @@ export const DEFAULT_TEMPLATES: ChartTemplate[] = [
     description: 'Analyze profit margins by product/service',
     category: 'finance',
     icon: '📊',
-    color: 'from-emerald-500 to-emerald-600',
     config: {
       type: 'bar',
       title: 'Profit Margin',
@@ -185,7 +173,6 @@ export const DEFAULT_TEMPLATES: ChartTemplate[] = [
     description: 'Track cash flow over time',
     category: 'finance',
     icon: '💹',
-    color: 'from-lime-500 to-lime-600',
     config: {
       type: 'line',
       title: 'Cash Flow',
@@ -224,7 +211,6 @@ export function createTemplateFromConfig(
     description,
     category,
     icon: '⭐',
-    color: 'from-gray-500 to-gray-600',
     config,
     requiredColumns: {
       numeric: config.yAxis === 'count' ? 0 : 1,
