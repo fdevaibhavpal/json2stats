@@ -17,8 +17,8 @@ export function Toast({
   id, 
   title, 
   description, 
-  type = 'info', 
-  duration = 5000,
+  type = 'info',
+  duration = 2500,
   onClose 
 }: ToastProps) {
   const [isVisible, setIsVisible] = useState(true);

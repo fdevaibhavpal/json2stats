@@ -8,22 +8,22 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  BarChart3, 
-  LineChart, 
+import {
+  BarChart3,
+  LineChart,
   PieChart,
   Settings,
-  Palette,
-  Type,
-  Layout,
-  Save,
   Eye,
-  ArrowLeft,
   Check
 } from 'lucide-react';
 import { ColumnSchema } from '@/types';
 import { ChartConfig } from '@/types/chart.types';
 import { useToast } from '@/hooks/use-toast';
+import { useChartData } from '@/hooks/use-chart-data';
+import { BarChart } from './bar-chart';
+import { LineChart as LineChartComponent } from './line-chart';
+import { PieChart as PieChartComponent } from './pie-chart';
+import { CHART_COLORS } from '@/lib/chart-colors';
 
 interface AdvancedBuilderProps {
   columns: ColumnSchema[];
@@ -39,6 +39,9 @@ export function AdvancedBuilder({ columns, data, onChartCreate }: AdvancedBuilde
     yAxis: columns.find(c => c.type === 'number')?.key || 'count'
   });
   const [activeTab, setActiveTab] = useState<'data' | 'style' | 'layout'>('data');
+  const [showLegend, setShowLegend] = useState(true);
+  const [showDataLabels, setShowDataLabels] = useState(true);
+  const [stackedBars, setStackedBars] = useState(false);
   const { success, error } = useToast();
 
   const numericColumns = columns.filter(col => col.type === 'number');
@@ -90,6 +93,21 @@ export function AdvancedBuilder({ columns, data, onChartCreate }: AdvancedBuilde
       case 'pie': return PieChart;
       default: return BarChart3;
     }
+  };
+
+  const previewConfig: ChartConfig = {
+    id: 'preview',
+    title: config.title || 'Custom Chart',
+    type: config.type || 'bar',
+    xAxis: config.xAxis || '',
+    yAxis: config.yAxis || 'count',
+  };
+  const { data: previewData, isEmpty: previewIsEmpty } = useChartData(data, columns, previewConfig);
+  const previewOptions = {
+    showLegend,
+    showDataLabels,
+    stackedBars,
+    colors: [CHART_COLORS[0]],
   };
 
   return (
@@ -149,7 +167,6 @@ export function AdvancedBuilder({ columns, data, onChartCreate }: AdvancedBuilde
                         {categoricalColumns.map((col) => (
                           <SelectItem key={col.key} value={col.key}>
                             <div className="flex items-center gap-2">
-                              <div className="w-2 h-2 rounded-full bg-blue-500" />
                               {col.label}
                               <Badge variant="outline" className="text-xs">
                                 {col.type}
@@ -172,7 +189,6 @@ export function AdvancedBuilder({ columns, data, onChartCreate }: AdvancedBuilde
                         {numericColumns.map((col) => (
                           <SelectItem key={col.key} value={col.key}>
                             <div className="flex items-center gap-2">
-                              <div className="w-2 h-2 rounded-full bg-green-500" />
                               {col.label}
                               <Badge variant="outline" className="text-xs">
                                 {col.type}
@@ -182,7 +198,6 @@ export function AdvancedBuilder({ columns, data, onChartCreate }: AdvancedBuilde
                         ))}
                         <SelectItem value="count">
                           <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-purple-500" />
                             Count
                             <Badge variant="outline" className="text-xs">
                               calculated
@@ -215,50 +230,46 @@ export function AdvancedBuilder({ columns, data, onChartCreate }: AdvancedBuilde
                     />
                   </div>
 
-                  {/* Color Theme */}
-                  <div className="space-y-2">
-                    <Label>Color Theme</Label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {['blue', 'green', 'purple', 'orange'].map((color) => (
-                        <Button
-                          key={color}
-                          variant="outline"
-                          size="sm"
-                          className="capitalize"
-                        >
-                          {color}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
                 </TabsContent>
 
                 <TabsContent value="layout" className="space-y-4 mt-4">
-                  {/* Chart Size */}
-                  <div className="space-y-2">
-                    <Label>Chart Size</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select size" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="small">Small</SelectItem>
-                        <SelectItem value="medium">Medium</SelectItem>
-                        <SelectItem value="large">Large</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  {/* Show Data Labels */}
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id="data-labels"
+                      checked={showDataLabels}
+                      onChange={(e) => setShowDataLabels(e.target.checked)}
+                      className="rounded-sm"
+                    />
+                    <Label htmlFor="data-labels">Show data labels</Label>
                   </div>
 
                   {/* Show Legend */}
                   <div className="flex items-center space-x-2">
-                    <input type="checkbox" id="legend" defaultChecked />
-                    <Label htmlFor="legend">Show Legend</Label>
+                    <input
+                      type="checkbox"
+                      id="legend"
+                      checked={showLegend}
+                      onChange={(e) => setShowLegend(e.target.checked)}
+                      className="rounded-sm"
+                    />
+                    <Label htmlFor="legend">Show legend</Label>
                   </div>
 
-                  {/* Show Grid */}
+                  {/* Stacked Bars */}
                   <div className="flex items-center space-x-2">
-                    <input type="checkbox" id="grid" defaultChecked />
-                    <Label htmlFor="grid">Show Grid</Label>
+                    <input
+                      type="checkbox"
+                      id="stacked"
+                      checked={stackedBars}
+                      onChange={(e) => setStackedBars(e.target.checked)}
+                      disabled={config.type !== 'bar'}
+                      className="rounded-sm"
+                    />
+                    <Label htmlFor="stacked" className={config.type !== 'bar' ? 'text-muted-foreground' : ''}>
+                      Stacked bars
+                    </Label>
                   </div>
                 </TabsContent>
               </Tabs>
@@ -284,19 +295,50 @@ export function AdvancedBuilder({ columns, data, onChartCreate }: AdvancedBuilde
             <CardContent>
               <div className="space-y-4">
                 {/* Chart Preview */}
-                <div className="h-64 bg-slate-50 dark:bg-slate-800 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <div className={`w-16 h-16 rounded-lg bg-linear-to-r from-blue-500 to-blue-600 flex items-center justify-center mx-auto mb-4`}>
-                      {(() => {
-                        const Icon = getChartTypeIcon(config.type || 'bar');
-                        return <Icon className="h-8 w-8 text-white" />;
-                      })()}
+                <div className="h-72 bg-muted rounded-md border border-border p-2">
+                  {previewIsEmpty || !config.xAxis ? (
+                    <div className="h-full flex items-center justify-center">
+                      <div className="text-center">
+                        {(() => {
+                          const Icon = getChartTypeIcon(config.type || 'bar');
+                          return <Icon className="h-8 w-8 text-muted-foreground mx-auto mb-2" />;
+                        })()}
+                        <p className="text-sm text-muted-foreground">
+                          Select X and Y axis columns to preview
+                        </p>
+                      </div>
                     </div>
-                    <h3 className="font-semibold">{config.title || 'Custom Chart'}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {config.type?.toUpperCase()} Chart
-                    </p>
-                  </div>
+                  ) : (
+                    <>
+                      {config.type === 'bar' && (
+                        <BarChart
+                          data={previewData}
+                          title={previewConfig.title}
+                          xAxis={previewConfig.xAxis}
+                          yAxis={previewConfig.yAxis}
+                          options={previewOptions}
+                        />
+                      )}
+                      {config.type === 'line' && (
+                        <LineChartComponent
+                          data={previewData}
+                          title={previewConfig.title}
+                          xAxis={previewConfig.xAxis}
+                          yAxis={previewConfig.yAxis}
+                          options={previewOptions}
+                        />
+                      )}
+                      {config.type === 'pie' && (
+                        <PieChartComponent
+                          data={previewData}
+                          title={previewConfig.title}
+                          xAxis={previewConfig.xAxis}
+                          yAxis={previewConfig.yAxis}
+                          options={previewOptions}
+                        />
+                      )}
+                    </>
+                  )}
                 </div>
 
                 {/* Configuration Summary */}

@@ -77,26 +77,26 @@ export function CleanChartRenderer({
       {/* Stats Cards - Moved to Top */}
       <div className="space-y-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="text-center p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-            <div className="text-xl font-bold text-blue-600 dark:text-blue-400">
+          <div className="text-center p-3 bg-muted rounded-md border border-border">
+            <div className="text-xl font-bold text-primary">
               {stats.categories}
             </div>
             <div className="text-xs text-muted-foreground">Categories</div>
           </div>
-          <div className="text-center p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-            <div className="text-xl font-bold text-green-600 dark:text-green-400">
+          <div className="text-center p-3 bg-muted rounded-md border border-border">
+            <div className="text-xl font-bold">
               {stats.total.toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">Total</div>
           </div>
-          <div className="text-center p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-            <div className="text-xl font-bold text-purple-600 dark:text-purple-400">
+          <div className="text-center p-3 bg-muted rounded-md border border-border">
+            <div className="text-xl font-bold">
               {stats.average.toFixed(1)}
             </div>
             <div className="text-xs text-muted-foreground">Average</div>
           </div>
-          <div className="text-center p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-            <div className="text-xl font-bold text-orange-600 dark:text-orange-400">
+          <div className="text-center p-3 bg-muted rounded-md border border-border">
+            <div className="text-xl font-bold">
               {stats.max.toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">Maximum</div>

@@ -1,7 +1,8 @@
 'use client';
 
-import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LabelList, ResponsiveContainer, Cell } from 'recharts';
 import { ChartData, ChartOptions } from '@/types/chart.types';
+import { CHART_COLORS } from '@/lib/chart-colors';
 
 interface BarChartProps {
   data: ChartData[];
@@ -13,7 +14,7 @@ interface BarChartProps {
 }
 
 export function BarChart({ data, title, xAxis, yAxis, onDataClick, options = {} }: BarChartProps) {
-  const colors = options.colors || ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4'];
+  const colors = options.colors || CHART_COLORS;
 
   const handleBarClick = (data: any) => {
     if (onDataClick && data) {
@@ -60,9 +61,9 @@ export function BarChart({ data, title, xAxis, yAxis, onDataClick, options = {} 
             content={({ active, payload, label }) => {
               if (active && payload && payload.length) {
                 return (
-                  <div className="bg-white dark:bg-slate-800 p-3 border rounded-lg shadow-lg">
+                  <div className="bg-popover text-popover-foreground p-3 border border-border rounded-md font-mono">
                     <p className="font-medium">{label}</p>
-                    <p className="text-blue-600 dark:text-blue-400">
+                    <p className="text-primary">
                       {yAxis}: {payload[0].value?.toLocaleString()}
                     </p>
                   </div>
@@ -71,11 +72,19 @@ export function BarChart({ data, title, xAxis, yAxis, onDataClick, options = {} 
               return null;
             }}
           />
-          <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+          {options.showLegend && <Legend wrapperStyle={{ fontSize: 12 }} />}
+          <Bar
+            dataKey="value"
+            radius={[4, 4, 0, 0]}
+            stackId={options.stackedBars ? 'stack' : undefined}
+          >
+            {options.showDataLabels && (
+              <LabelList dataKey="value" position="top" style={{ fontSize: 12, fill: 'var(--foreground)' }} />
+            )}
             {data.map((entry, index) => (
-              <Cell 
-                key={`cell-${index}`} 
-                fill={colors[index % colors.length]}
+              <Cell
+                key={`cell-${index}`}
+                fill={colors.length > 1 ? colors[index % colors.length] : colors[0]}
                 className="cursor-pointer hover:opacity-80 transition-opacity"
               />
             ))}
