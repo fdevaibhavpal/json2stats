@@ -5,11 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Play, 
-  Code, 
-  Table, 
-  BarChart3, 
+import {
+  Play,
+  Table,
+  BarChart3,
   FileText,
   Copy,
   Check,
@@ -57,38 +56,40 @@ export function DemoSection({ onTryDemo }: DemoSectionProps) {
   };
 
   return (
-    <div className="py-24 bg-slate-50 dark:bg-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="border-b border-border px-6 sm:px-8 lg:px-16 xl:px-24 py-16">
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4">
             <Play className="h-4 w-4 mr-2" />
-            Try It Now
+            Try it now
           </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-            See It In Action
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+            See it in action
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-8">
-            Try our tool with sample data or upload your own JSON. No registration required!
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Try the tool with sample data or upload your own JSON. No registration required.
           </p>
         </div>
 
         {/* Demo Tabs */}
         <Tabs defaultValue="users" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8">
-            <TabsTrigger value="users" className="flex items-center gap-2">
-              <Table className="h-4 w-4" />
-              User Data
-            </TabsTrigger>
-            <TabsTrigger value="sales" className="flex items-center gap-2">
-              <BarChart3 className="h-4 w-4" />
-              Sales Data
-            </TabsTrigger>
-            <TabsTrigger value="products" className="flex items-center gap-2">
-              <FileText className="h-4 w-4" />
-              Products
-            </TabsTrigger>
-          </TabsList>
+          <div className="flex justify-center mb-8">
+            <TabsList>
+              <TabsTrigger value="users" className="flex items-center gap-2">
+                <Table className="h-4 w-4" />
+                User Data
+              </TabsTrigger>
+              <TabsTrigger value="sales" className="flex items-center gap-2">
+                <BarChart3 className="h-4 w-4" />
+                Sales Data
+              </TabsTrigger>
+              <TabsTrigger value="products" className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Products
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="users" className="space-y-6">
             <Card>
@@ -97,28 +98,28 @@ export function DemoSection({ onTryDemo }: DemoSectionProps) {
                   <Table className="h-5 w-5" />
                   Employee Database
                 </CardTitle>
-                <p className="text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-muted-foreground">
                   Sample employee data with personal information, roles, and salaries
                 </p>
               </CardHeader>
               <CardContent>
-                <div className="bg-slate-900 dark:bg-slate-950 rounded-lg p-4 overflow-x-auto">
-                  <pre className="text-sm text-slate-300">
+                <div className="bg-muted border border-border rounded-md p-4 overflow-x-auto">
+                  <pre className="text-sm text-muted-foreground font-mono">
                     <code>{JSON.stringify(sampleData.users, null, 2)}</code>
                   </pre>
                 </div>
                 <div className="flex gap-2 mt-4">
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
+                    variant="outline"
                     onClick={() => copyToClipboard(JSON.stringify(sampleData.users, null, 2))}
                     className="flex items-center gap-2"
                   >
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                     {copied ? 'Copied!' : 'Copy JSON'}
                   </Button>
-                  <Button 
-                    size="sm" 
-                    variant="outline"
+                  <Button
+                    size="sm"
                     onClick={onTryDemo}
                     className="flex items-center gap-2"
                   >
@@ -138,28 +139,28 @@ export function DemoSection({ onTryDemo }: DemoSectionProps) {
                   <BarChart3 className="h-5 w-5" />
                   Sales Analytics
                 </CardTitle>
-                <p className="text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-muted-foreground">
                   Monthly sales data perfect for creating charts and analytics
                 </p>
               </CardHeader>
               <CardContent>
-                <div className="bg-slate-900 dark:bg-slate-950 rounded-lg p-4 overflow-x-auto">
-                  <pre className="text-sm text-slate-300">
+                <div className="bg-muted border border-border rounded-md p-4 overflow-x-auto">
+                  <pre className="text-sm text-muted-foreground font-mono">
                     <code>{JSON.stringify(sampleData.sales, null, 2)}</code>
                   </pre>
                 </div>
                 <div className="flex gap-2 mt-4">
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
+                    variant="outline"
                     onClick={() => copyToClipboard(JSON.stringify(sampleData.sales, null, 2))}
                     className="flex items-center gap-2"
                   >
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                     {copied ? 'Copied!' : 'Copy JSON'}
                   </Button>
-                  <Button 
-                    size="sm" 
-                    variant="outline"
+                  <Button
+                    size="sm"
                     onClick={onTryDemo}
                     className="flex items-center gap-2"
                   >
@@ -179,28 +180,28 @@ export function DemoSection({ onTryDemo }: DemoSectionProps) {
                   <FileText className="h-5 w-5" />
                   Product Catalog
                 </CardTitle>
-                <p className="text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-muted-foreground">
                   E-commerce product data with categories, pricing, and inventory
                 </p>
               </CardHeader>
               <CardContent>
-                <div className="bg-slate-900 dark:bg-slate-950 rounded-lg p-4 overflow-x-auto">
-                  <pre className="text-sm text-slate-300">
+                <div className="bg-muted border border-border rounded-md p-4 overflow-x-auto">
+                  <pre className="text-sm text-muted-foreground font-mono">
                     <code>{JSON.stringify(sampleData.products, null, 2)}</code>
                   </pre>
                 </div>
                 <div className="flex gap-2 mt-4">
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
+                    variant="outline"
                     onClick={() => copyToClipboard(JSON.stringify(sampleData.products, null, 2))}
                     className="flex items-center gap-2"
                   >
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                     {copied ? 'Copied!' : 'Copy JSON'}
                   </Button>
-                  <Button 
-                    size="sm" 
-                    variant="outline"
+                  <Button
+                    size="sm"
                     onClick={onTryDemo}
                     className="flex items-center gap-2"
                   >
@@ -213,30 +214,6 @@ export function DemoSection({ onTryDemo }: DemoSectionProps) {
             </Card>
           </TabsContent>
         </Tabs>
-
-        {/* CTA Section */}
-        <div className="mt-16 text-center">
-          <Card className="max-w-2xl mx-auto bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-                Ready to Transform Your Data?
-              </h3>
-              <p className="text-slate-600 dark:text-slate-300 mb-6">
-                Upload your JSON file or paste your data to get started instantly. 
-                No registration, no limits, no hassle.
-              </p>
-              <Button 
-                size="lg" 
-                onClick={onTryDemo}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold"
-              >
-                <Play className="h-5 w-5 mr-2" />
-                Start Analyzing Your Data
-                <ArrowRight className="h-5 w-5 ml-2" />
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </div>
   );
