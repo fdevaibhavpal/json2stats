@@ -49,7 +49,7 @@ export function HeroSection({ onGetStarted, onViewDemo }: HeroSectionProps) {
         </div>
 
         {/* Right: animated dashboard demo */}
-        <div className="px-6 sm:px-8 lg:px-16 xl:px-24 py-16 lg:py-24 flex items-center bg-muted/40">
+        <div className="px-6 sm:px-8 lg:px-10 xl:px-12 py-10 lg:py-12 flex items-center bg-muted/40">
           <HeroDemoAnimation />
         </div>
       </div>

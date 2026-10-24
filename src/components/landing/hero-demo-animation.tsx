@@ -82,26 +82,26 @@ export function HeroDemoAnimation() {
               'transition-all duration-500',
               step === 'input'
                 ? 'opacity-100 translate-y-0'
-                : 'opacity-0 -translate-y-2 pointer-events-none absolute inset-4'
+                : 'opacity-0 -translate-y-2 pointer-events-none absolute inset-6'
             )}
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-semibold">JSON Input</span>
-              <span className="text-xs bg-foreground text-background rounded-sm px-2 py-1 font-mono">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-base font-semibold">JSON Input</span>
+              <span className="text-sm bg-foreground text-background rounded-sm px-3 py-1.5 font-mono">
                 Process JSON →
               </span>
             </div>
-            <div className="rounded-md border border-border bg-muted p-3 font-mono text-xs leading-relaxed text-muted-foreground">
+            <div className="rounded-md border border-border bg-muted p-4 font-mono text-sm leading-relaxed text-muted-foreground">
               <div><span className="text-primary">{'['}</span></div>
-              <div className="pl-3">{'{'}</div>
-              <div className="pl-6">&quot;id&quot;: 1,</div>
-              <div className="pl-6">&quot;name&quot;: &quot;Laptop&quot;,</div>
-              <div className="pl-6">&quot;price&quot;: 999</div>
-              <div className="pl-3">{'},'}</div>
+              <div className="pl-4">{'{'}</div>
+              <div className="pl-8">&quot;id&quot;: 1,</div>
+              <div className="pl-8">&quot;name&quot;: &quot;Laptop&quot;,</div>
+              <div className="pl-8">&quot;price&quot;: 999</div>
+              <div className="pl-4">{'},'}</div>
               <div><span className="text-primary">{']'}</span></div>
             </div>
-            <div className="flex items-center gap-1.5 mt-3 text-xs font-mono text-primary">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+            <div className="flex items-center gap-2 mt-4 text-sm font-mono text-primary">
+              <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
               Valid JSON
             </div>
           </div>
@@ -112,15 +112,15 @@ export function HeroDemoAnimation() {
               'transition-all duration-500',
               step === 'table'
                 ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-2 pointer-events-none absolute inset-4'
+                : 'opacity-0 translate-y-2 pointer-events-none absolute inset-6'
             )}
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-semibold">Data Table</span>
-              <span className="text-xs text-muted-foreground font-mono">3 records</span>
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-base font-semibold">Data Table</span>
+              <span className="text-sm text-muted-foreground font-mono">3 records</span>
             </div>
             <div className="rounded-md border border-border overflow-hidden">
-              <div className="grid grid-cols-3 bg-muted text-xs font-mono uppercase text-muted-foreground px-3 py-1.5">
+              <div className="grid grid-cols-3 bg-muted text-sm font-mono uppercase text-muted-foreground px-4 py-2.5">
                 <span>Name</span>
                 <span>Category</span>
                 <span className="text-right">Price</span>
@@ -128,12 +128,12 @@ export function HeroDemoAnimation() {
               {TABLE_ROWS.map((row, i) => (
                 <div
                   key={row.name}
-                  className="grid grid-cols-3 px-3 py-1.5 text-xs font-mono border-t border-border"
+                  className="grid grid-cols-3 px-4 py-2.5 text-sm font-mono border-t border-border"
                   style={{ animationDelay: `${i * 80}ms` }}
                 >
                   <span>{row.name}</span>
                   <span>
-                    <span className="bg-muted rounded-sm px-1.5 py-0.5 text-muted-foreground">{row.category}</span>
+                    <span className="bg-muted rounded-sm px-2 py-1 text-muted-foreground">{row.category}</span>
                   </span>
                   <span className="text-right">{row.price}</span>
                 </div>
@@ -147,17 +147,17 @@ export function HeroDemoAnimation() {
               'transition-all duration-500',
               step === 'charts'
                 ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-2 pointer-events-none absolute inset-4'
+                : 'opacity-0 translate-y-2 pointer-events-none absolute inset-6'
             )}
           >
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-semibold">Value by Category</span>
-              <span className="text-xs text-muted-foreground font-mono">bar chart</span>
+            <div className="flex items-center justify-between mb-6">
+              <span className="text-base font-semibold">Value by Category</span>
+              <span className="text-sm text-muted-foreground font-mono">bar chart</span>
             </div>
-            <div className="flex items-end gap-3 h-28 px-1">
+            <div className="flex items-end gap-4 h-44 px-1">
               {CHART_BARS.map((bar) => (
-                <div key={bar.label} className="flex-1 flex flex-col items-center gap-2">
-                  <div className="w-full flex items-end justify-center h-24">
+                <div key={bar.label} className="flex-1 flex flex-col items-center gap-3">
+                  <div className="w-full flex items-end justify-center h-36">
                     <div
                       className="w-full bg-primary rounded-t-sm transition-all duration-700 ease-out"
                       style={{
@@ -165,7 +165,7 @@ export function HeroDemoAnimation() {
                       }}
                     />
                   </div>
-                  <span className="text-[10px] font-mono text-muted-foreground truncate w-full text-center">
+                  <span className="text-xs font-mono text-muted-foreground truncate w-full text-center">
                     {bar.label}
                   </span>
                 </div>
@@ -176,7 +176,7 @@ export function HeroDemoAnimation() {
       </div>
 
       {/* Step indicator dots */}
-      <div className="flex items-center justify-center gap-1.5 py-3 border-t border-border">
+      <div className="flex items-center justify-center gap-2 py-4 border-t border-border">
         {STEP_ORDER.map((s, i) => (
           <span
             key={s}
