@@ -55,7 +55,7 @@ function defineJsonDashThemes(monaco: Monaco) {
   });
 }
 
-export function JsonInput({ value, onChange, onValidate }: JsonInputProps) {
+export function JsonInput({ value, onChange, onValidate, onCopy, onClear }: JsonInputProps) {
   const { resolvedTheme } = useTheme();
 
   const handleBeforeMount = useCallback((monaco: Monaco) => {
@@ -63,7 +63,35 @@ export function JsonInput({ value, onChange, onValidate }: JsonInputProps) {
   }, []);
 
   return (
-    <div className="border border-border rounded-md overflow-hidden flex-1 min-h-0">
+    <div className="relative border border-border rounded-md overflow-hidden flex-1 min-h-0">
+      {(onCopy || onClear) && (
+        <div className="absolute top-2 right-2 z-10 flex items-center gap-1">
+          {onCopy && (
+            <Button
+              variant="outline"
+              size="icon-sm"
+              onClick={onCopy}
+              disabled={!value.trim()}
+              title="Copy"
+              className="bg-card/90 backdrop-blur-sm"
+            >
+              <Copy className="h-3.5 w-3.5" />
+            </Button>
+          )}
+          {onClear && (
+            <Button
+              variant="outline"
+              size="icon-sm"
+              onClick={onClear}
+              disabled={!value.trim()}
+              title="Clear"
+              className="bg-card/90 backdrop-blur-sm"
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+            </Button>
+          )}
+        </div>
+      )}
       <div className="h-full">
         <Editor
           height="100%"

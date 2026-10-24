@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Upload } from 'lucide-react';
+import { Upload, Play } from 'lucide-react';
 import { useTableStore } from '@/store/table-store';
 import { useJsonValidation } from '@/hooks/use-json-validation';
 import { useFileHandler } from '@/hooks/use-file-handler';
@@ -99,7 +99,7 @@ export function JsonEditor({ onDataLoaded }: JsonEditorProps) {
   const [jsonValue, setJsonValue] = useState('');
   const { loadJsonData } = useTableStore();
   const { isValidating, validationResult, validateJson } = useJsonValidation();
-  const { handleFileUpload } = useFileHandler();
+  const { handleFileUpload, copyToClipboard } = useFileHandler();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Auto-validate JSON as user types
@@ -161,36 +161,49 @@ export function JsonEditor({ onDataLoaded }: JsonEditorProps) {
     setJsonValue('');
   }, []);
 
+  const handleCopy = useCallback(async () => {
+    try {
+      await copyToClipboard(jsonValue);
+    } catch (error) {
+      console.error('Failed to copy:', error);
+    }
+  }, [jsonValue, copyToClipboard]);
+
   return (
     <div className="flex flex-col h-full min-h-0 space-y-3">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row gap-3 lg:items-center justify-between shrink-0">
-        <div>
-          <h2 className="text-xl font-bold">JSON Input</h2>
-          <p className="text-sm text-muted-foreground">Paste or type your JSON data below.</p>
+      <div className="flex flex-col gap-3 shrink-0">
+        <div className="flex flex-col lg:flex-row gap-3 lg:items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold">JSON Input</h2>
+            <p className="text-sm text-muted-foreground">Paste or type your JSON data below.</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+              <Upload className="h-4 w-4 mr-2" />
+              Load File
+            </Button>
+            <Button variant="outline" size="sm" onClick={handleLoadSample}>
+              Sample
+            </Button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json,.ndjson,.jsonl,.txt"
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+            <Button size="sm" onClick={handleLoadData} disabled={!validationResult.isValid || !jsonValue.trim()}>
+              <Play className="h-4 w-4 mr-2" />
+              Process JSON
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
-            <Upload className="h-4 w-4 mr-2" />
-            Load File
-          </Button>
-          <Button variant="outline" size="sm" onClick={handleLoadSample}>
-            Sample
-          </Button>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".json,.ndjson,.jsonl,.txt"
-            onChange={handleFileSelect}
-            className="hidden"
-          />
+        <div className="flex justify-end">
           <JsonActions
             value={jsonValue}
-            onProcess={handleLoadData}
             onMinify={handleMinify}
             onFormat={handleFormatJson}
-            onClear={handleClear}
-            processDisabled={!validationResult.isValid || !jsonValue.trim()}
           />
         </div>
       </div>
@@ -202,6 +215,8 @@ export function JsonEditor({ onDataLoaded }: JsonEditorProps) {
             value={jsonValue}
             onChange={setJsonValue}
             onValidate={validateJson}
+            onCopy={handleCopy}
+            onClear={handleClear}
           />
         </div>
 
