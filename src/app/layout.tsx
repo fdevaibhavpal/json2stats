@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "JSON Dashboard",
-  description: "Transform JSON into beautiful, searchable tables and dashboards",
+  title: "JsonDash",
+  description: "Explore JSON data visually — tables, charts, filters, and exports, all in your browser.",
 };
 
 export default function RootLayout({
