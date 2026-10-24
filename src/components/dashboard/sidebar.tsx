@@ -1,20 +1,16 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
-  FileText, 
-  Table, 
-  BarChart3, 
-  PieChart, 
-  Download,
+import {
+  FileText,
+  Table,
+  PieChart,
   Settings,
-  HelpCircle,
-  ChevronLeft,
-  ChevronRight
 } from 'lucide-react';
 import { useTableStore } from '@/store/table-store';
+import { Logo } from '@/components/landing/logo';
+import { cn } from '@/lib/utils';
 
 interface SidebarProps {
   activeTab: string;
@@ -22,16 +18,15 @@ interface SidebarProps {
 }
 
 export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
-  const [collapsed, setCollapsed] = useState(false);
   const { data, getProcessedData } = useTableStore();
-  
+
   const processedData = getProcessedData();
   const hasData = data.length > 0;
 
   const menuItems = [
     {
-      id: 'input',
-      label: 'Input',
+      id: 'data',
+      label: 'Data',
       icon: FileText,
       description: 'Load JSON data'
     },
@@ -51,58 +46,43 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
       disabled: !hasData
     },
     {
-      id: 'stats',
-      label: 'Analytics',
-      icon: BarChart3,
-      description: 'Data insights',
-      disabled: !hasData
+      id: 'settings',
+      label: 'Settings',
+      icon: Settings,
+      description: 'Preferences'
     }
   ];
 
   return (
-    <div className={`bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 transition-all duration-300 ${
-      collapsed ? 'w-16' : 'w-64'
-    }`}>
-      <div className="p-4">
+    <div className="bg-sidebar border-r border-sidebar-border flex flex-col w-64">
+      <div className="p-4 flex-1 flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          {!collapsed && (
-            <div>
-              <h2 className="text-lg font-semibold">JSON Dashboard</h2>
-              <p className="text-sm text-muted-foreground">Data Analytics</p>
-            </div>
-          )}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setCollapsed(!collapsed)}
-            className="ml-auto"
-          >
-            {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
-          </Button>
+        <div className="mb-6">
+          <Logo />
         </div>
 
         {/* Navigation */}
-        <nav className="space-y-2">
+        <nav className="space-y-1">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
-            
+
             return (
-              <Button
-                key={item.id}
-                variant={isActive ? "default" : "ghost"}
-                className={`w-full justify-start h-auto p-3 ${
-                  isActive 
-                    ? 'bg-linear-to-r from-blue-500 to-purple-600 text-white' 
-                    : 'hover:bg-slate-100 dark:hover:bg-slate-800'
-                }`}
-                onClick={() => !item.disabled && onTabChange(item.id)}
-                disabled={item.disabled}
-              >
-                <div className="flex items-center gap-3 w-full">
-                  <Icon className="h-4 w-4 shrink-0" />
-                  {!collapsed && (
+              <div key={item.id} className="relative">
+                {isActive && (
+                  <span className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary rounded-full" />
+                )}
+                <Button
+                  variant="ghost"
+                  className={cn(
+                    'w-full justify-start h-auto p-3 pl-4',
+                    isActive ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'hover:bg-sidebar-accent'
+                  )}
+                  onClick={() => !item.disabled && onTabChange(item.id)}
+                  disabled={item.disabled}
+                >
+                  <div className="flex items-center gap-3 w-full">
+                    <Icon className="h-4 w-4 shrink-0" />
                     <div className="flex-1 text-left">
                       <div className="flex items-center gap-2">
                         <span className="font-medium">{item.label}</span>
@@ -116,48 +96,22 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
                         {item.description}
                       </p>
                     </div>
-                  )}
-                </div>
-              </Button>
+                  </div>
+                </Button>
+              </div>
             );
           })}
         </nav>
 
-        {/* Quick Actions */}
-        {hasData && !collapsed && (
-          <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
-            <h3 className="text-sm font-medium text-muted-foreground mb-3">Quick Actions</h3>
-            <div className="space-y-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full justify-start"
-                onClick={() => {
-                  const exportEvent = new CustomEvent('export-data');
-                  window.dispatchEvent(exportEvent);
-                }}
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Export Data
-              </Button>
-             
-            </div>
-          </div>
-        )}
+        <div className="flex-1" />
 
-        {/* Footer */}
-        {!collapsed && (
-          <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Settings className="h-4 w-4" />
-              <span>Settings</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
-              <HelpCircle className="h-4 w-4" />
-              <span>Help & Support</span>
-            </div>
-          </div>
-        )}
+        {/* Footer signature */}
+        <div className="mt-6 pt-4 border-t border-sidebar-border text-xs text-muted-foreground font-mono space-y-0.5">
+          <div className="font-semibold text-foreground mb-1">JSON DASH</div>
+          <div>Open source</div>
+          <div>Client side</div>
+          <div>No database</div>
+        </div>
       </div>
     </div>
   );

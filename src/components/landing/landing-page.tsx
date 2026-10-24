@@ -1,10 +1,13 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { LandingNav } from './landing-nav';
 import { HeroSection } from './hero-section';
 import { FeaturesSection } from './features-section';
+import { HowItWorksSection } from './how-it-works-section';
 import { DemoSection } from './demo-section';
 import { CTASection } from './cta-section';
+import { Logo } from './logo';
 import { useTableStore } from '@/store/table-store';
 
 export function LandingPage() {
@@ -24,21 +27,12 @@ export function LandingPage() {
       { id: 4, name: "Sarah Wilson", email: "sarah@example.com", age: 29, city: "Seattle", role: "Developer", salary: 82000, joinDate: "2023-06-05", active: true },
       { id: 5, name: "David Brown", email: "david@example.com", age: 38, city: "Austin", role: "Analyst", salary: 72000, joinDate: "2022-09-12", active: true }
     ];
-    
+
     loadJsonData(JSON.stringify(sampleData, null, 2));
     router.push('/dashboard');
   };
 
   const handleViewDemo = () => {
-    // Scroll to demo section
-    const demoSection = document.getElementById('demo-section');
-    if (demoSection) {
-      demoSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleViewExamples = () => {
-    // Scroll to demo section
     const demoSection = document.getElementById('demo-section');
     if (demoSection) {
       demoSection.scrollIntoView({ behavior: 'smooth' });
@@ -46,29 +40,24 @@ export function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-900">
+    <div className="min-h-screen bg-background">
+      <LandingNav />
       <HeroSection onGetStarted={handleGetStarted} onViewDemo={handleViewDemo} />
       <FeaturesSection />
+      <HowItWorksSection />
       <div id="demo-section">
         <DemoSection onTryDemo={handleTryDemo} />
       </div>
-      <CTASection onGetStarted={handleGetStarted} onViewExamples={handleViewExamples} />
-      
+      <CTASection onGetStarted={handleGetStarted} onViewExamples={handleViewDemo} />
+
       {/* Footer */}
-      <footer className="bg-slate-900 dark:bg-slate-950 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h3 className="text-2xl font-bold mb-4">JsonDash</h3>
-          <p className="text-slate-400 mb-6">
-            Transform your JSON data into beautiful, actionable insights.
-          </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center text-sm text-slate-500">
-              <span>© 2024 JsonDash. All rights reserved.</span>
-              <span>•</span>
-              <span>Built with Next.js, React, and TypeScript</span>
-              <span>•</span>
-              <span>100% Open Source</span>
-            </div>
+      <footer className="px-6 sm:px-8 lg:px-16 xl:px-24 py-10">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <Logo />
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-sm text-muted-foreground font-mono text-center">
+            <span>© 2026 JsonDash</span>
+            <span className="hidden sm:inline">·</span>
+            <span>Paste JSON. Get a table, charts, filters, and exports. Nothing leaves your browser.</span>
           </div>
         </div>
       </footer>

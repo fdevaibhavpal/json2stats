@@ -1,45 +1,84 @@
 'use client';
 
-import { Editor } from '@monaco-editor/react';
-import { useState, useEffect } from 'react';
+import { Editor, type Monaco } from '@monaco-editor/react';
+import { useTheme } from 'next-themes';
+import { useCallback } from 'react';
+import { Copy, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface JsonInputProps {
   value: string;
   onChange: (value: string) => void;
   onValidate: (value: string) => void;
-  theme?: 'vs-dark' | 'light';
+  onCopy?: () => void;
+  onClear?: () => void;
 }
 
-export function JsonInput({ value, onChange, onValidate, theme = 'vs-dark' }: JsonInputProps) {
-  const [editorTheme, setEditorTheme] = useState<'vs-dark' | 'light'>(theme);
+function defineJsonDashThemes(monaco: Monaco) {
+  monaco.editor.defineTheme('jsondash-light', {
+    base: 'vs',
+    inherit: true,
+    rules: [
+      { token: 'string.key.json', foreground: '45a049' },
+      { token: 'string.value.json', foreground: '555555' },
+      { token: 'number.json', foreground: '555555' },
+      { token: 'keyword.json', foreground: '45a049' },
+    ],
+    colors: {
+      'editor.background': '#fafaf7',
+      'editor.foreground': '#1a1a1a',
+      'editorLineNumber.foreground': '#999999',
+      'editorLineNumber.activeForeground': '#1a1a1a',
+      'editor.lineHighlightBackground': '#00000008',
+      'editorCursor.foreground': '#45a049',
+      'editorIndentGuide.background': '#e0e0dc',
+    },
+  });
+  monaco.editor.defineTheme('jsondash-dark', {
+    base: 'vs-dark',
+    inherit: true,
+    rules: [
+      { token: 'string.key.json', foreground: '6fd97f' },
+      { token: 'string.value.json', foreground: 'cccccc' },
+      { token: 'number.json', foreground: 'cccccc' },
+      { token: 'keyword.json', foreground: '6fd97f' },
+    ],
+    colors: {
+      'editor.background': '#1a1a18',
+      'editor.foreground': '#f0f0ee',
+      'editorLineNumber.foreground': '#666666',
+      'editorLineNumber.activeForeground': '#f0f0ee',
+      'editor.lineHighlightBackground': '#ffffff08',
+      'editorCursor.foreground': '#6fd97f',
+      'editorIndentGuide.background': '#333331',
+    },
+  });
+}
 
-  // Update editor theme based on system theme
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const updateTheme = () => {
-      setEditorTheme(mediaQuery.matches ? 'vs-dark' : 'light');
-    };
-    
-    updateTheme();
-    mediaQuery.addEventListener('change', updateTheme);
-    return () => mediaQuery.removeEventListener('change', updateTheme);
+export function JsonInput({ value, onChange, onValidate }: JsonInputProps) {
+  const { resolvedTheme } = useTheme();
+
+  const handleBeforeMount = useCallback((monaco: Monaco) => {
+    defineJsonDashThemes(monaco);
   }, []);
 
   return (
-    <div className="border-2 border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden shadow-lg">
-      <div className="h-[400px]">
+    <div className="border border-border rounded-md overflow-hidden flex-1 min-h-0">
+      <div className="h-full">
         <Editor
           height="100%"
           defaultLanguage="json"
           value={value}
+          beforeMount={handleBeforeMount}
           onChange={(newValue) => {
             onChange(newValue || '');
             onValidate(newValue || '');
           }}
-          theme={editorTheme}
+          theme={resolvedTheme === 'dark' ? 'jsondash-dark' : 'jsondash-light'}
           options={{
             minimap: { enabled: false },
             fontSize: 14,
+            fontFamily: 'var(--font-geist-mono), monospace',
             lineNumbers: 'on',
             roundedSelection: false,
             scrollBeyondLastLine: false,

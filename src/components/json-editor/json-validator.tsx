@@ -1,40 +1,48 @@
 'use client';
 
-import { AlertCircle, CheckCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle, Circle, Loader2 } from 'lucide-react';
+import { JsonData } from '@/types';
 
 interface JsonValidatorProps {
   isValidating: boolean;
   isValid: boolean;
   error: string | null;
   value: string;
+  data?: JsonData[];
 }
 
-export function JsonValidator({ isValidating, isValid, error, value }: JsonValidatorProps) {
+function hasConsistentStructure(data: JsonData[]): boolean {
+  if (data.length <= 1) return true;
+  const firstKeys = Object.keys(data[0]).sort().join(',');
+  return data.every((item) => Object.keys(item).sort().join(',') === firstKeys);
+}
+
+export function JsonValidator({ isValidating, isValid, error, value, data }: JsonValidatorProps) {
   if (!value.trim()) {
     return null;
   }
 
   if (isValidating) {
     return (
-      <div className="flex items-center gap-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-        <div className="animate-spin rounded-full h-4 w-4 border-2 border-yellow-600 border-t-transparent"></div>
-        <span className="text-sm text-yellow-600 dark:text-yellow-400">Validating JSON...</span>
+      <div className="flex items-center gap-2 p-3 bg-muted border border-border rounded-md">
+        <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+        <span className="text-sm text-muted-foreground">Validating JSON...</span>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-start gap-3 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-        <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 shrink-0" />
+      <div className="flex items-start gap-3 p-4 bg-destructive/10 border border-destructive/30 rounded-md">
+        <AlertCircle className="h-5 w-5 text-destructive mt-0.5 shrink-0" />
         <div className="flex-1">
-          <div className="text-sm font-medium text-red-800 dark:text-red-200 mb-1">
+          <div className="text-sm font-medium text-destructive mb-1">
             Invalid JSON Format
           </div>
-          <div className="text-sm text-red-600 dark:text-red-400 mb-2">
+          <div className="text-sm text-destructive/80 mb-2">
             {error}
           </div>
-          <div className="text-xs text-red-500 dark:text-red-300">
+          <div className="text-xs text-muted-foreground">
             <strong>Supported formats:</strong> JSON, NDJSON, JSONL, or single objects
           </div>
         </div>
@@ -43,12 +51,26 @@ export function JsonValidator({ isValidating, isValid, error, value }: JsonValid
   }
 
   if (isValid) {
+    const consistent = data ? hasConsistentStructure(data) : true;
+    const checks = [
+      { label: 'Valid JSON syntax', ok: true },
+      { label: `${data?.length ?? 0} record${data?.length === 1 ? '' : 's'} (array)`, ok: true },
+      { label: 'Consistent structure', ok: consistent },
+      { label: 'No parsing errors', ok: true },
+    ];
+
     return (
-      <div className="flex items-center gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-        <CheckCircle className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-        <span className="text-sm text-blue-600 dark:text-blue-400">
-          Valid JSON detected • {value.split('\n').length} lines • {value.length} characters
-        </span>
+      <div className="p-3 bg-muted border border-border rounded-md space-y-1.5">
+        {checks.map((check) => (
+          <div key={check.label} className="flex items-center gap-2 text-sm">
+            {check.ok ? (
+              <CheckCircle className="h-4 w-4 text-primary shrink-0" />
+            ) : (
+              <Circle className="h-4 w-4 text-muted-foreground shrink-0" />
+            )}
+            <span className={check.ok ? '' : 'text-muted-foreground'}>{check.label}</span>
+          </div>
+        ))}
       </div>
     );
   }
