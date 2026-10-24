@@ -41,35 +41,21 @@ export function Toast({
   const getIcon = () => {
     switch (type) {
       case 'success':
-        return <CheckCircle className="h-5 w-5 text-green-600" />;
+        return <CheckCircle className="h-5 w-5 text-primary" />;
       case 'error':
-        return <AlertCircle className="h-5 w-5 text-red-600" />;
+        return <AlertCircle className="h-5 w-5 text-destructive" />;
       case 'warning':
-        return <AlertTriangle className="h-5 w-5 text-yellow-600" />;
+        return <AlertTriangle className="h-5 w-5 text-foreground" />;
       default:
-        return <Info className="h-5 w-5 text-blue-600" />;
-    }
-  };
-
-  const getStyles = () => {
-    switch (type) {
-      case 'success':
-        return 'bg-green-50 border-green-200 text-green-900 dark:bg-green-900/20 dark:border-green-800 dark:text-green-100';
-      case 'error':
-        return 'bg-red-50 border-red-200 text-red-900 dark:bg-red-900/20 dark:border-red-800 dark:text-red-100';
-      case 'warning':
-        return 'bg-yellow-50 border-yellow-200 text-yellow-900 dark:bg-yellow-900/20 dark:border-yellow-800 dark:text-yellow-100';
-      default:
-        return 'bg-blue-50 border-blue-200 text-blue-900 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-100';
+        return <Info className="h-5 w-5 text-muted-foreground" />;
     }
   };
 
   return (
     <div
       className={cn(
-        'fixed top-4 right-4 z-50 max-w-sm w-full bg-white dark:bg-slate-800 border rounded-lg shadow-lg transition-all duration-300',
-        isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0',
-        getStyles()
+        'fixed top-4 right-4 z-50 max-w-sm w-full bg-card border-border text-foreground border rounded-md transition-all duration-300 font-mono',
+        isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
       )}
     >
       <div className="flex items-start gap-3 p-4">
@@ -79,12 +65,12 @@ export function Toast({
             <div className="font-medium text-sm">{title}</div>
           )}
           {description && (
-            <div className="text-sm mt-1 opacity-90">{description}</div>
+            <div className="text-sm mt-1 text-muted-foreground">{description}</div>
           )}
         </div>
         <button
           onClick={handleClose}
-          className="flex-shrink-0 p-1 hover:bg-black/10 dark:hover:bg-white/10 rounded transition-colors"
+          className="flex-shrink-0 p-1 hover:bg-accent rounded-sm transition-colors"
         >
           <X className="h-4 w-4" />
         </button>
