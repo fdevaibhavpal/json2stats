@@ -107,10 +107,10 @@ export function TemplateGallery({ columns, onTemplateSelect, onCustomCreate }: T
       </div>
 
       {/* Data Requirements Info */}
-      <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+      <Card className="bg-muted border-border">
         <CardContent className="p-4">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-2 h-2 rounded-full bg-blue-500" />
+            <div className="w-2 h-2 rounded-full bg-primary" />
             <span className="text-sm font-medium">Data Requirements</span>
           </div>
           <div className="text-sm text-muted-foreground">
@@ -133,12 +133,12 @@ export function TemplateGallery({ columns, onTemplateSelect, onCustomCreate }: T
           return (
             <Card
               key={template.id}
-              className="cursor-pointer hover:shadow-md transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+              className="cursor-pointer hover:border-primary transition-colors"
               onClick={() => onTemplateSelect(template)}
             >
               <CardContent className="p-4">
                 <div className="flex items-start gap-3 mb-3">
-                  <div className={`w-10 h-10 rounded-lg bg-linear-to-r ${template.color} flex items-center justify-center`}>
+                  <div className="w-10 h-10 rounded-md border border-border bg-muted flex items-center justify-center shrink-0">
                     <span className="text-lg">{template.icon}</span>
                   </div>
                   <div className="flex-1">

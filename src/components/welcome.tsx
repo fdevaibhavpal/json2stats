@@ -3,13 +3,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Upload, 
-  FileText, 
-  BarChart3, 
+import {
+  Upload,
+  FileText,
+  BarChart3,
   Table,
   TrendingUp,
-  Zap,
   ArrowRight,
   CheckCircle
 } from 'lucide-react';
@@ -24,25 +23,21 @@ export function Welcome({ onGetStarted }: WelcomeProps) {
       icon: Upload,
       title: 'Upload JSON Data',
       description: 'Paste your JSON or upload a file',
-      color: 'from-blue-500 to-blue-600'
     },
     {
       icon: Table,
       title: 'View Your Data',
       description: 'See your data in a clean table format',
-      color: 'from-green-500 to-green-600'
     },
     {
       icon: BarChart3,
       title: 'Create Charts',
       description: 'Generate insights with one-click charts',
-      color: 'from-purple-500 to-purple-600'
     },
     {
       icon: TrendingUp,
       title: 'Export & Share',
       description: 'Export your data and insights',
-      color: 'from-orange-500 to-orange-600'
     }
   ];
 
@@ -60,13 +55,11 @@ export function Welcome({ onGetStarted }: WelcomeProps) {
       {/* Hero Section */}
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-2 mb-4">
-          <div className="w-12 h-12 rounded-lg bg-linear-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-            <Zap className="h-6 w-6 text-white" />
-          </div>
+          <span className="text-3xl font-mono font-bold text-muted-foreground">{'{ }'}</span>
           <h1 className="text-4xl font-bold">JsonDash</h1>
         </div>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Transform your JSON data into beautiful, interactive dashboards in seconds. 
+          Transform your JSON data into beautiful, interactive dashboards in seconds.
           No coding required.
         </p>
         <div className="flex items-center justify-center gap-4">
@@ -74,7 +67,7 @@ export function Welcome({ onGetStarted }: WelcomeProps) {
             Get Started
             <ArrowRight className="h-4 w-4" />
           </Button>
-          <Badge variant="secondary" className="text-sm">
+          <Badge variant="outline" className="text-sm">
             Free Forever
           </Badge>
         </div>
@@ -92,11 +85,11 @@ export function Welcome({ onGetStarted }: WelcomeProps) {
               return (
                 <div key={index} className="text-center space-y-3">
                   <div className="relative">
-                    <div className={`w-16 h-16 rounded-full bg-linear-to-r ${step.color} flex items-center justify-center mx-auto`}>
-                      <Icon className="h-8 w-8 text-white" />
+                    <div className="w-16 h-16 rounded-md border border-border bg-muted flex items-center justify-center mx-auto">
+                      <Icon className="h-7 w-7 text-foreground" />
                     </div>
                     {index < steps.length - 1 && (
-                      <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-slate-200 dark:bg-slate-700 -translate-x-1/2" />
+                      <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-border -translate-x-1/2" />
                     )}
                   </div>
                   <div>
@@ -115,7 +108,7 @@ export function Welcome({ onGetStarted }: WelcomeProps) {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-green-600" />
+              <CheckCircle className="h-5 w-5 text-primary" />
               Why Choose JsonDash?
             </CardTitle>
           </CardHeader>
@@ -123,7 +116,7 @@ export function Welcome({ onGetStarted }: WelcomeProps) {
             <ul className="space-y-2">
               {features.map((feature, index) => (
                 <li key={index} className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
                   <span className="text-sm">{feature}</span>
                 </li>
               ))}
@@ -138,8 +131,8 @@ export function Welcome({ onGetStarted }: WelcomeProps) {
           <CardContent>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center">
-                  <TrendingUp className="h-4 w-4 text-blue-600" />
+                <div className="w-8 h-8 rounded-md border border-border bg-muted flex items-center justify-center">
+                  <TrendingUp className="h-4 w-4 text-foreground" />
                 </div>
                 <div>
                   <div className="font-medium">Data Analysts</div>
@@ -147,8 +140,8 @@ export function Welcome({ onGetStarted }: WelcomeProps) {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-green-100 dark:bg-green-900/20 flex items-center justify-center">
-                  <FileText className="h-4 w-4 text-green-600" />
+                <div className="w-8 h-8 rounded-md border border-border bg-muted flex items-center justify-center">
+                  <FileText className="h-4 w-4 text-foreground" />
                 </div>
                 <div>
                   <div className="font-medium">Developers</div>
@@ -156,8 +149,8 @@ export function Welcome({ onGetStarted }: WelcomeProps) {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center">
-                  <BarChart3 className="h-4 w-4 text-purple-600" />
+                <div className="w-8 h-8 rounded-md border border-border bg-muted flex items-center justify-center">
+                  <BarChart3 className="h-4 w-4 text-foreground" />
                 </div>
                 <div>
                   <div className="font-medium">Business Users</div>

@@ -1,7 +1,8 @@
 'use client';
 
-import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { ChartData, ChartOptions } from '@/types/chart.types';
+import { CHART_COLORS } from '@/lib/chart-colors';
 
 interface LineChartProps {
   data: ChartData[];
@@ -13,7 +14,7 @@ interface LineChartProps {
 }
 
 export function LineChart({ data, title, xAxis, yAxis, onDataClick, options = {} }: LineChartProps) {
-  const colors = options.colors || ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4'];
+  const colors = options.colors || CHART_COLORS;
 
   const handleLineClick = (data: any) => {
     if (onDataClick && data) {
@@ -42,27 +43,33 @@ export function LineChart({ data, title, xAxis, yAxis, onDataClick, options = {}
       </div>
       
       <ResponsiveContainer width="100%" height={300}>
-        <RechartsLineChart
+        <AreaChart
           data={data}
           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           onClick={handleLineClick}
         >
+          <defs>
+            <linearGradient id="lineChartFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={colors[0]} stopOpacity={0.25} />
+              <stop offset="95%" stopColor={colors[0]} stopOpacity={0} />
+            </linearGradient>
+          </defs>
           <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-          <XAxis 
-            dataKey="name" 
+          <XAxis
+            dataKey="name"
             tick={{ fontSize: 12 }}
             angle={-45}
             textAnchor="end"
             height={60}
           />
           <YAxis tick={{ fontSize: 12 }} />
-          <Tooltip 
+          <Tooltip
             content={({ active, payload, label }) => {
               if (active && payload && payload.length) {
                 return (
-                  <div className="bg-white dark:bg-slate-800 p-3 border rounded-lg shadow-lg">
+                  <div className="bg-popover text-popover-foreground p-3 border border-border rounded-md font-mono">
                     <p className="font-medium">{label}</p>
-                    <p className="text-blue-600 dark:text-blue-400">
+                    <p className="text-primary">
                       {yAxis}: {payload[0].value?.toLocaleString()}
                     </p>
                   </div>
@@ -71,16 +78,17 @@ export function LineChart({ data, title, xAxis, yAxis, onDataClick, options = {}
               return null;
             }}
           />
-          <Line 
-            type="monotone" 
-            dataKey="value" 
+          <Area
+            type="monotone"
+            dataKey="value"
             stroke={colors[0]}
             strokeWidth={2}
+            fill="url(#lineChartFill)"
             dot={{ fill: colors[0], strokeWidth: 2, r: 4 }}
             activeDot={{ r: 6, stroke: colors[0], strokeWidth: 2 }}
             className="cursor-pointer"
           />
-        </RechartsLineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

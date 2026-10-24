@@ -2,6 +2,7 @@
 
 import { PieChart as RechartsPieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { ChartData, ChartOptions } from '@/types/chart.types';
+import { CHART_COLORS } from '@/lib/chart-colors';
 
 interface PieChartProps {
   data: ChartData[];
@@ -13,7 +14,7 @@ interface PieChartProps {
 }
 
 export function PieChart({ data, title, xAxis, yAxis, onDataClick, options = {} }: PieChartProps) {
-  const colors = options.colors || ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4'];
+  const colors = options.colors || CHART_COLORS;
 
   const handlePieClick = (data: any) => {
     if (onDataClick && data) {
@@ -43,8 +44,8 @@ export function PieChart({ data, title, xAxis, yAxis, onDataClick, options = {} 
             cx="50%"
             cy="50%"
             labelLine={false}
+            innerRadius={60}
             outerRadius={100}
-            fill="#8884d8"
             dataKey="value"
             onClick={handlePieClick}
             className="cursor-pointer"
@@ -63,9 +64,9 @@ export function PieChart({ data, title, xAxis, yAxis, onDataClick, options = {} 
                 const data = payload[0];
                 const percentage = ((data.value / total) * 100).toFixed(1);
                 return (
-                  <div className="bg-white dark:bg-slate-800 p-3 border rounded-lg shadow-lg">
+                  <div className="bg-popover text-popover-foreground p-3 border border-border rounded-md font-mono">
                     <p className="font-medium">{data.name}</p>
-                    <p className="text-blue-600 dark:text-blue-400">
+                    <p className="text-primary">
                       Value: {data.value?.toLocaleString()}
                     </p>
                     <p className="text-sm text-muted-foreground">
